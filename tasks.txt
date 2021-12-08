@@ -1,0 +1,14 @@
+1) Parse the triggers into an appropriate structure (one day we might want to add some validation!).
+--> https://pastebin.com/raw/PjFkFsAk
+
+2) The **Producer** should execute the various calls using the Multicall library. The triggers are all querying the balance for the same 0x000... address on multiple smart contracts.
+
+3) We want to run our triggers in this way:
+
+- ~~(BONUS) We want to batch all the triggers in groups of 3 or less (i.e. every multicall is made of max 3 sub-calls)~~
+- We want to execute the various multicalls concurrently, but with no more than 3 go-routines running at the same time
+- We want to handles errors
+
+4) The output of every subcall will be a number. Should this number be even, the Producer will pass this output to the Consumer. In the future, we might want the conditions to be more sophisticated. 
+
+5) The **Consumer** will save the number on a Database (you can use a mock here).
